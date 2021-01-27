@@ -1,0 +1,5 @@
+# Set your MySQL parameters here
+# Url should be in this format: "jdbc:mysql://<address>/<database_name>?useSSL=false"
+url: ""
+user: ""
+pwd: ""

@@ -1,0 +1,6 @@
+name: PlayerCounter
+main: dev.feriixu.PlayerCounter.Main
+author: feriixu
+description: Analyze Player Counts
+api-version: 1.16
+version: 1.0
