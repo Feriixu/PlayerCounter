@@ -22,6 +22,6 @@ public class JoinQuitListener implements org.bukkit.event.Listener {
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent e) {
         this.databaseConnection.registerEvent(e.getPlayer(), 1);
-        this.databaseConnection.recordCount(Bukkit.getOnlinePlayers().size());
+        this.databaseConnection.recordCount(Bukkit.getOnlinePlayers().size() - 1);
     }
 }
