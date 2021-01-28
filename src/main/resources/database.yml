@@ -3,3 +3,5 @@
 url: ""
 user: ""
 pwd: ""
+# This should be the name of your Server
+servername: ""

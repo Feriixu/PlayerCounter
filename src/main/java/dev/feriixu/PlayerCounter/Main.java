@@ -1,9 +1,6 @@
 package dev.feriixu.PlayerCounter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.sql.SQLException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main extends JavaPlugin {

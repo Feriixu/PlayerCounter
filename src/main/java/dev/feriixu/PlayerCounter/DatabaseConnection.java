@@ -17,18 +17,14 @@ public class DatabaseConnection {
         }
     }
 
-    enum PlayerEvent {
-        join,
-        leave
-    }
-
     // 0 = join, 1 = leave
     public void registerEvent(Player p, int action) {
         try (Connection con = DriverManager.getConnection(this.databaseConfig.get("url"), this.databaseConfig.get("user"), this.databaseConfig.get("pwd"))){
-            String sql = "INSERT INTO `pc_events` (`username`, `action`) VALUES (?, ?);";
+            String sql = "INSERT INTO `pc_events` (`server`, `username`, `action`) VALUES (?, ?, ?);";
             PreparedStatement s = con.prepareStatement(sql);
-            s.setString(1, p.getDisplayName());
-            s.setInt(2, action);
+            s.setString(1, databaseConfig.get("servername"));
+            s.setString(2, p.getDisplayName());
+            s.setInt(3, action);
             s.executeUpdate();
 
         } catch (SQLException ex) {
@@ -38,9 +34,10 @@ public class DatabaseConnection {
 
     public void recordCount(int count) {
         try (Connection con = DriverManager.getConnection(this.databaseConfig.get("url"), this.databaseConfig.get("user"), this.databaseConfig.get("pwd"))){
-            String sql = "INSERT INTO `pc_count` (`count`) VALUES (?);";
+            String sql = "INSERT INTO `pc_count` (`server`, `count`) VALUES (?, ?);";
             PreparedStatement s = con.prepareStatement(sql);
-            s.setInt(1, count);
+            s.setString(1, databaseConfig.get("servername"));
+            s.setInt(2, count);
             s.executeUpdate();
 
         } catch (SQLException ex) {
@@ -51,11 +48,11 @@ public class DatabaseConnection {
     private void initDB() {
         try (Connection con = DriverManager.getConnection(this.databaseConfig.get("url"), this.databaseConfig.get("user"), this.databaseConfig.get("pwd"))) {
             // Create event table
-            String event_table_sql = "CREATE TABLE IF NOT EXISTS `pc_events` ( `id` INT NOT NULL AUTO_INCREMENT , `username` VARCHAR(16) NOT NULL , `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `action` TINYINT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;";
+            String event_table_sql = "CREATE TABLE IF NOT EXISTS `pc_events` ( `id` INT NOT NULL AUTO_INCREMENT , `server` text NOT NULL , `username` VARCHAR(16) NOT NULL , `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `action` TINYINT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;";
             PreparedStatement s = con.prepareStatement(event_table_sql);
             s.executeUpdate();
 
-            String count_table_sql = "CREATE TABLE IF NOT EXISTS `pc_count` ( `id` INT NOT NULL AUTO_INCREMENT , `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `count` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;";
+            String count_table_sql = "CREATE TABLE IF NOT EXISTS `pc_count` ( `id` INT NOT NULL AUTO_INCREMENT , `server` text NOT NULL , `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `count` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;";
             s = con.prepareStatement(count_table_sql);
             s.executeUpdate();
 

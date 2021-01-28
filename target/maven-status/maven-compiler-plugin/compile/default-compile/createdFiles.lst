@@ -1,5 +1,4 @@
 dev\feriixu\PlayerCounter\Main.class
-dev\feriixu\PlayerCounter\DatabaseConfig.class
-dev\feriixu\PlayerCounter\DatabaseConnection$PlayerEvent.class
 dev\feriixu\PlayerCounter\DatabaseConnection.class
+dev\feriixu\PlayerCounter\DatabaseConfig.class
 dev\feriixu\PlayerCounter\JoinQuitListener.class
